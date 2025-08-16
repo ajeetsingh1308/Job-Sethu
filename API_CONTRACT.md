@@ -1,97 +1,166 @@
-# API Contract for Job Sethu
+
+API Contract for Job Sethu
+==========================
+
 This document serves as the single source of truth for all API communication between the Job Sethu frontend (React/React Native) and the backend (Supabase/Node.js Serverless Functions).
 
----
+* * * * *
 
-## Table of Contents
-# Data Models
-- User
-- Job
-- Application
-- Message
-- Authentication
-- API Endpoints
+Table of Contents
+-----------------
 
-# User & Profile Management
-1. Get Current User Profile
-2. Update Current User Profile
+-   [Data Models](https://www.google.com/search?q=%23data-models)
 
-# Job Management
-3. Get All Jobs
-4. Get Single Job Details
-5. Create a New Job
-6. Update a Job
-7. Delete a Job
+    -   [User](https://www.google.com/search?q=%23user)
 
-# Job Applications
-8. Apply for a Job
-9. Get Applicants for a Job
-10. Update Application Status
+    -   [Job](https://www.google.com/search?q=%23job)
 
-# Chat & Messaging
-11. Get Message History for a Job
-12. Send a Message
+    -   [Application](https://www.google.com/search?q=%23application)
 
-# AI Features (Gemini Integration)
-13. Suggest Job Details
-14. Suggest Chat Reply
+    -   [Payment](https://www.google.com/search?q=%23payment)
 
+    -   [Message](https://www.google.com/search?q=%23message)
 
+-   [Authentication](https://www.google.com/search?q=%23authentication)
 
-## Data Models
+-   [API Endpoints](https://www.google.com/search?q=%23api-endpoints)
+
+    -   [User & Profile Management](https://www.google.com/search?q=%23user--profile-management)
+
+        -   [1\. Get Current User Profile](https://www.google.com/search?q=%231-get-current-user-profile)
+
+        -   [2\. Update Current User Profile](https://www.google.com/search?q=%232-update-current-user-profile)
+
+    -   [Job Management](https://www.google.com/search?q=%23job-management)
+
+        -   [3\. Get All Jobs](https://www.google.com/search?q=%233-get-all-jobs)
+
+        -   [4\. Get Single Job Details](https://www.google.com/search?q=%234-get-single-job-details)
+
+        -   [5\. Create a New Job](https://www.google.com/search?q=%235-create-a-new-job)
+
+        -   [6\. Update a Job](https://www.google.com/search?q=%236-update-a-job)
+
+        -   [7\. Delete a Job](https://www.google.com/search?q=%237-delete-a-job)
+
+    -   [Job Applications](https://www.google.com/search?q=%23job-applications)
+
+        -   [8\. Apply for a Job](https://www.google.com/search?q=%238-apply-for-a-job)
+
+        -   [9\. Get Applicants for a Job](https://www.google.com/search?q=%239-get-applicants-for-a-job)
+
+        -   [10\. Update Application Status](https://www.google.com/search?q=%2310-update-application-status)
+
+    -   [Payment Integration](https://www.google.com/search?q=%23payment-integration-)
+
+        -   [11\. Create Stripe Connect Account](https://www.google.com/search?q=%2311-create-stripe-connect-account)
+
+        -   [12\. Create Payment Intent](https://www.google.com/search?q=%2312-create-payment-intent)
+
+        -   [13\. Confirm Job Completion & Release Funds](https://www.google.com/search?q=%2313-confirm-job-completion--release-funds)
+
+    -   [Chat & Messaging](https://www.google.com/search?q=%23chat--messaging)
+
+        -   [14\. Get Message History for a Job](https://www.google.com/search?q=%2314-get-message-history-for-a-job)
+
+        -   [15\. Send a Message](https://www.google.com/search?q=%2315-send-a-message)
+
+    -   [AI Features (Gemini Integration)](https://www.google.com/search?q=%23ai-features-gemini-integration)
+
+        -   [16\. Suggest Job Details](https://www.google.com/search?q=%2316-suggest-job-details)
+
+        -   [17\. Suggest Chat Reply](https://www.google.com/search?q=%2317-suggest-chat-reply)
+
+* * * * *
+
+Data Models
+-----------
 
 These are the primary data structures that inform the API payloads.
 
 ### User
 
-Represents a user's public profile data stored in our database.
+Represents a user's public profile data.
 
-```json
+JSON
+
+```
 {
-  "id": "uuid", // Primary key, matches Supabase Auth user ID
+  "id": "uuid",
   "full_name": "string",
   "email": "string",
   "avatar_url": "string | null",
   "skills": ["string"],
-  "location": "geography(Point, 4326)"
+  "location": "geography(Point, 4326)",
+  "stripe_account_id": "string | null", // For workers to receive payments
+  "stripe_onboarding_complete": "boolean"
 }
+
 ```
 
-### **Job**
+### Job
 
 Represents a job posting created by a user.
 
-```json
+JSON
+
+```
 {
   "id": "uuid",
-  "poster_id": "uuid", // Foreign key to users.id
+  "poster_id": "uuid",
+  "worker_id": "uuid | null",
   "title": "string",
   "description": "text",
+  "amount": "integer", // Agreed-upon price in smallest currency unit (e.g., paise)
   "skills_required": ["string"],
   "image_url": "string | null",
-  "location": "geography(Point, 4326)",
-  "status": "enum('open', 'in_progress', 'completed', 'closed')"
+  "status": "enum('open', 'in_progress', 'pending_completion', 'completed', 'canceled')"
 }
+
 ```
 
-### **Application**
+### Application
 
 Represents a user's application for a specific job.
 
-```json
+JSON
+
+```
 {
     "id": "uuid",
     "job_id": "uuid",
     "applicant_id": "uuid",
     "status": "enum('pending', 'accepted', 'rejected')"
 }
+
 ```
 
-### **Message**
+### Payment
+
+Tracks the status of a transaction for a job.
+
+JSON
+
+```
+{
+    "id": "uuid",
+    "job_id": "uuid",
+    "poster_id": "uuid",
+    "worker_id": "uuid",
+    "amount": "integer",
+    "stripe_payment_intent_id": "string",
+    "status": "enum('funded', 'released', 'canceled')"
+}
+
+```
+
+### Message
 
 Represents a single message within a job-specific chat.
 
-```json
+JSON
+
+```
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -100,416 +169,379 @@ Represents a single message within a job-specific chat.
     "content": "text",
     "created_at": "timestampz"
 }
+
 ```
 
 * * * * *
 
-**Authentication**
-------------------
+Authentication
+--------------
 
-Authentication is handled directly by the **Supabase client library** on the frontend for signup, login, and session management.
-
-There are no custom /api/auth/signup or /api/auth/login endpoints.
-
-All protected API endpoints listed below require a JWT in the request header:
-
+Authentication is handled directly by the Supabase client library. All protected API endpoints require a JWT in the request header:
 
 Authorization: Bearer <SUPABASE_JWT>
 
-
 * * * * *
 
-**API Endpoints**
------------------
+API Endpoints
+-------------
 
-### **User & Profile Management**
+### User & Profile Management
 
-#### **1\. Get Current User Profile**
+#### 1\. Get Current User Profile
 
 -   **Feature:** Get authenticated user's profile
 
--   **HTTP Method:**  GET
+-   **HTTP Method:** `GET`
 
--   **Endpoint Path:**  /api/profile
+-   **Endpoint Path:** `/api/profile`
 
--   **Description:** Retrieves the profile information for the currently logged-in user.
+-   **Success Response (200 OK):** The User object for the logged-in user.
 
--   **Success Response (200 OK):**
+-   **Error Response(s):** `401 Unauthorized`
 
-```json
-{
-  "id": "a1b2c3d4-...",
-  "full_name": "Ananya Sharma",
-  "email": "ananya.sharma@example.com",
-  "avatar_url": "https://.../avatar.png",
-  "skills": ["Gardening", "Event Planning"]
-}
-```
-
--   **Error Response(s):**
-
-    -   401 Unauthorized: User is not authenticated.
-
-#### **2\. Update Current User Profile**
+#### 2\. Update Current User Profile
 
 -   **Feature:** Update authenticated user's profile
 
--   **HTTP Method:**  PUT
+-   **HTTP Method:** `PUT`
 
--   **Endpoint Path:**  /api/profile
-
--   **Description:** Updates profile information for the logged-in user.
+-   **Endpoint Path:** `/api/profile`
 
 -   **Request Body:**
 
-```json
-{
-  "full_name": "Ananya Sharma",
-  "skills": ["Gardening", "Event Planning", "Tutoring"]
-}
-```
+    JSON
 
--   **Success Response (200 OK):** Returns the updated User object.
+    ```
+    {
+      "full_name": "Ananya Sharma",
+      "skills": ["Gardening", "Event Planning", "Tutoring"]
+    }
 
--   **Error Response(s):**
+    ```
 
-    -   400 Bad Request: Validation failed.
+-   **Success Response (200 OK):** The updated User object.
 
-    -   401 Unauthorized: User is not authenticated.
+-   **Error Response(s):** `400 Bad Request`, `401 Unauthorized`
 
 * * * * *
 
-### **Job Management**
+### Job Management
 
-#### **3\. Get All Jobs**
+#### 3\. Get All Jobs
 
 -   **Feature:** Get all job listings
 
--   **HTTP Method:**  GET
+-   **HTTP Method:** `GET`
 
--   **Endpoint Path:**  /api/jobs
+-   **Endpoint Path:** `/api/jobs`
 
--   **Description:** Retrieves a list of open jobs, with optional filters for search and location.
+-   **Success Response (200 OK):** An array of Job objects.
 
--   **Success Response (200 OK):**
+-   **Error Response(s):** `500 Internal Server Error`
 
-```json
-[
-  {
-    "id": "j1a2b3c4-...",
-    "title": "Need help with garden weeding",
-    "image_url": "https://.../garden.png",
-    "location": { "type": "Point", "coordinates": [73.8567, 18.5204] },
-    "poster": {
-        "full_name": "Rohan Patel"
-    }
-  }
-]
-```
-
--   **Error Response(s):**
-
-    -   500 Internal Server Error: Database query failed.
-
-#### **4\. Get Single Job Details**
+#### 4\. Get Single Job Details
 
 -   **Feature:** Get single job details
 
--   **HTTP Method:**  GET
+-   **HTTP Method:** `GET`
 
--   **Endpoint Path:**  /api/jobs/{id}
+-   **Endpoint Path:** `/api/jobs/{id}`
 
--   **Description:** Retrieves the full details for a specific job.
+-   **Success Response (200 OK):** The full Job object with poster details.
 
--   **Success Response (200 OK):** Returns the full Job object with poster details.
+-   **Error Response(s):** `404 Not Found`
 
--   **Error Response(s):**
-
-    -   404 Not Found: Job with the specified ID does not exist.
-
-#### **5\. Create a New Job**
+#### 5\. Create a New Job
 
 -   **Feature:** Create a new job posting
 
--   **HTTP Method:**  POST
+-   **HTTP Method:** `POST`
 
--   **Endpoint Path:**  /api/jobs
-
--   **Description:** Creates a new job posting for the authenticated user.
+-   **Endpoint Path:** `/api/jobs`
 
 -   **Request Body:**
 
-```json
-{
-  "title": "Math Tutor Needed",
-  "description": "Looking for a tutor for grade 10 algebra.",
-  "skills_required": ["Mathematics", "Tutoring"],
-  "location": { "lat": 18.5204, "lon": 73.8567 }
-}
-```
+    JSON
 
--   **Success Response (201 Created):** Returns the newly created Job object.
+    ```
+    {
+      "title": "Math Tutor Needed",
+      "description": "Looking for a tutor for grade 10 algebra.",
+      "amount": 50000,
+      "skills_required": ["Mathematics", "Tutoring"],
+      "location": { "lat": 18.5204, "lon": 73.8567 }
+    }
 
--   **Error Response(s):**
+    ```
 
-    -   400 Bad Request: Validation failed.
+-   **Success Response (201 Created):** The newly created Job object.
 
-    -   401 Unauthorized: User is not authenticated.
+-   **Error Response(s):** `400 Bad Request`, `401 Unauthorized`
 
-#### **6\. Update a Job**
+#### 6\. Update a Job
 
 -   **Feature:** Update a job posting
 
--   **HTTP Method:**  PUT
+-   **HTTP Method:** `PUT`
 
--   **Endpoint Path:**  /api/jobs/{id}
+-   **Endpoint Path:** `/api/jobs/{id}`
 
 -   **Description:** Updates an existing job. Only the job's poster can perform this action.
 
--   **Request Body:**
+-   **Success Response (200 OK):** The fully updated Job object.
 
-```json
-{
-  "title": "Urgent Math Tutor Needed",
-  "description": "Updated description...",
-  "status": "closed"
-}
-```
+-   **Error Response(s):** `401 Unauthorized`, `403 Forbidden`, `404 Not Found`
 
--   **Success Response (200 OK):** Returns the fully updated Job object.
-
--   **Error Response(s):**
-
-    -   401 Unauthorized: User is not authenticated.
-
-    -   403 Forbidden: User is not the poster of the job.
-
-    -   404 Not Found: Job does not exist.
-
-#### **7\. Delete a Job**
+#### 7\. Delete a Job
 
 -   **Feature:** Delete a job posting
 
--   **HTTP Method:**  DELETE
+-   **HTTP Method:** `DELETE`
 
--   **Endpoint Path:**  /api/jobs/{id}
+-   **Endpoint Path:** `/api/jobs/{id}`
 
 -   **Description:** Deletes a job posting. Only the job's poster can perform this action.
 
 -   **Success Response (204 No Content):** An empty response indicating success.
 
--   **Error Response(s):**
-
-    -   401 Unauthorized: User is not authenticated.
-
-    -   403 Forbidden: User is not the poster of the job.
-
-    -   404 Not Found: Job does not exist.
+-   **Error Response(s):** `401 Unauthorized`, `403 Forbidden`, `404 Not Found`
 
 * * * * *
 
-### **Job Applications**
+### Job Applications
 
-#### **8\. Apply for a Job**
+#### 8\. Apply for a Job
 
 -   **Feature:** Apply for a job
 
--   **HTTP Method:**  POST
+-   **HTTP Method:** `POST`
 
--   **Endpoint Path:**  /api/jobs/{id}/apply
+-   **Endpoint Path:** `/api/jobs/{id}/apply`
 
--   **Description:** Allows the authenticated user to apply for a specific job.
+-   **Description:** Allows an authenticated user to apply for a job. (No request body needed).
 
 -   **Success Response (201 Created):** Returns the new Application object.
 
--   **Error Response(s):**
+-   **Error Response(s):** `401 Unauthorized`, `404 Not Found`, `409 Conflict`
 
-    -   401 Unauthorized: Not authenticated.
-
-    -   404 Not Found: Job does not exist.
-
-    -   409 Conflict: User has already applied for this job.
-
-#### **9\. Get Applicants for a Job**
+#### 9\. Get Applicants for a Job
 
 -   **Feature:** Get job applicants
 
--   **HTTP Method:**  GET
+-   **HTTP Method:** `GET`
 
--   **Endpoint Path:**  /api/jobs/{id}/applicants
+-   **Endpoint Path:** `/api/jobs/{id}/applicants`
 
 -   **Description:** Retrieves a list of users who have applied for a job. Only accessible by the job poster.
 
--   **Success Response (200 OK):**
+-   **Success Response (200 OK):** An array of Application objects with applicant details.
 
-```json
-[
-    {
-        "application_id": "app1-...",
-        "status": "pending",
-        "applicant": {
-            "id": "u4d5e6f7-...",
-            "full_name": "Priya Singh",
-            "avatar_url": "https://.../priya.png",
-            "skills": ["Gardening", "Teamwork"]
-        }
-    }
-]
-```
+-   **Error Response(s):** `403 Forbidden`, `404 Not Found`
 
--   **Error Response(s):**
-
-    -   403 Forbidden: User is not the job poster.
-
-    -   404 Not Found: Job does not exist.
-
-#### **10\. Update Application Status**
+#### 10\. Update Application Status
 
 -   **Feature:** Accept or reject an applicant
 
--   **HTTP Method:**  PUT
+-   **HTTP Method:** `PUT`
 
--   **Endpoint Path:**  /api/applications/{id}
+-   **Endpoint Path:** `/api/applications/{id}`
 
--   **Description:** Allows a job poster to accept or reject an application.
+-   **Description:** Allows a job poster to accept or reject an application. Accepting an application updates the job status and assigns the `worker_id`, initiating the payment flow.
 
 -   **Request Body:**
 
-```json
-{
-    "status": "accepted"
-}
-```
+    JSON
 
--   **Success Response (200 OK):**
+    ```
+    { "status": "accepted" }
 
-```json
-{
-    "message": "Application status updated successfully."
-}
-```
+    ```
 
--   **Error Response(s):**
+-   **Success Response (200 OK):** `{"message": "Application status updated."}`
 
-    -   403 Forbidden: User is not the job poster.
-
-    -   404 Not Found: Application does not exist.
+-   **Error Response(s):** `403 Forbidden`, `404 Not Found`
 
 * * * * *
 
-### **Chat & Messaging**
+### Payment Integration 💳
 
-#### **11\. Get Message History for a Job**
+#### 11\. Create Stripe Connect Account
+
+-   **Feature:** Onboard a worker for payouts
+
+-   **HTTP Method:** `POST`
+
+-   **Endpoint Path:** `/api/stripe/create-connect-account`
+
+-   **Description:** Creates a Stripe Express account for the user and returns an onboarding link.
+
+-   **Success Response (200 OK):**
+
+    JSON
+
+    ```
+    {
+      "onboarding_url": "https://connect.stripe.com/express/..."
+    }
+
+    ```
+
+-   **Error Response(s):** `401 Unauthorized`, `500 Internal Server Error`
+
+#### 12\. Create Payment Intent
+
+-   **Feature:** Fund a job into escrow
+
+-   **HTTP Method:** `POST`
+
+-   **Endpoint Path:** `/api/jobs/{id}/create-payment-intent`
+
+-   **Description:** Creates a Stripe Payment Intent for the agreed amount. The `client_secret` is used by the frontend Stripe Elements to securely complete the payment.
+
+-   **Success Response (200 OK):**
+
+    JSON
+
+    ```
+    {
+      "client_secret": "pi_..._secret_..."
+    }
+
+    ```
+
+-   **Error Response(s):** `403 Forbidden`, `404 Not Found`, `500 Internal Server Error`
+
+#### 13\. Confirm Job Completion & Release Funds
+
+-   **Feature:** Payout the worker
+
+-   **HTTP Method:** `POST`
+
+-   **Endpoint Path:** `/api/jobs/{id}/confirm-completion`
+
+-   **Description:** Confirms the job is done, triggering the serverless function to release the escrowed funds to the worker. Only the job poster can call this.
+
+-   **Success Response (200 OK):**
+
+    JSON
+
+    ```
+    {
+      "message": "Completion confirmed. Funds are being released to the worker."
+    }
+
+    ```
+
+-   **Error Response(s):** `403 Forbidden`, `404 Not Found`, `500 Internal Server Error`
+
+* * * * *
+
+### Chat & Messaging
+
+#### 14\. Get Message History for a Job
 
 -   **Feature:** Get chat history
 
--   **HTTP Method:**  GET
+-   **HTTP Method:** `GET`
 
--   **Endpoint Path:**  /api/jobs/{id}/messages
-
--   **Description:** Retrieves the full message history for a specific job chat. Accessible only by the poster and the applicant.
+-   **Endpoint Path:** `/api/jobs/{id}/messages`
 
 -   **Success Response (200 OK):** An array of Message objects.
 
--   **Error Response(s):**
+-   **Error Response(s):** `403 Forbidden`, `404 Not Found`
 
-    -   403 Forbidden: User is not part of this job's communication.
-
-    -   404 Not Found: Job does not exist.
-
-#### **12\. Send a Message**
+#### 15\. Send a Message
 
 -   **Feature:** Send a chat message
 
--   **HTTP Method:**  POST
+-   **HTTP Method:** `POST`
 
--   **Endpoint Path:**  /api/jobs/{id}/messages
-
--   **Description:** Sends a message in the context of a job.
+-   **Endpoint Path:** `/api/jobs/{id}/messages`
 
 -   **Request Body:**
 
-```json
-{
-    "content": "Hi, I'm available to discuss this further tomorrow morning."
-}
-```
+    JSON
 
--   **Success Response (201 Created):** Returns the newly created Message object.
+    ```
+    { "content": "Hi, I'm available to discuss this further tomorrow morning." }
 
--   **Error Response(s):**
+    ```
 
-    -   403 Forbidden: User is not part of this job's communication.
+-   **Success Response (201 Created):** The newly created Message object.
 
-    -   404 Not Found: Job does not exist.
+-   **Error Response(s):** `403 Forbidden`, `404 Not Found`
 
 * * * * *
 
-### **AI Features (Gemini Integration)**
+### AI Features (Gemini Integration)
 
-#### **13\. Suggest Job Details**
+#### 16\. Suggest Job Details
 
 -   **Feature:** Generate job description and skills
 
--   **HTTP Method:**  POST
+-   **HTTP Method:** `POST`
 
--   **Endpoint Path:**  /api/ai/suggest-job-details
-
--   **Description:** Takes a job title and uses Gemini to generate a suggested description and list of skills.
+-   **Endpoint Path:** `/api/ai/suggest-job-details`
 
 -   **Request Body:**
 
-```json
-{
-  "title": "Help moving boxes to a new apartment"
-}
-```
+    JSON
+
+    ```
+    { "title": "Help moving boxes to a new apartment" }
+
+    ```
 
 -   **Success Response (200 OK):**
 
-```json
-{
-  "description": "Seeking a reliable individual to assist with moving boxes...",
-  "skills": ["Manual Labor", "Punctuality", "Physical Fitness"]
-}
-```
+    JSON
 
--   **Error Response(s):** 500 Internal Server Error if the AI service fails.
+    ```
+    {
+      "description": "Seeking a reliable individual to assist with moving boxes...",
+      "skills": ["Manual Labor", "Punctuality", "Physical Fitness"]
+    }
 
-#### **14\. Suggest Chat Reply**
+    ```
+
+-   **Error Response(s):** `500 Internal Server Error`
+
+#### 17\. Suggest Chat Reply
 
 -   **Feature:** Generate reply suggestions for chat
 
--   **HTTP Method:**  POST
+-   **HTTP Method:** `POST`
 
--   **Endpoint Path:**  /api/ai/suggest-reply
-
--   **Description:** Analyzes chat context and suggests relevant replies.
+-   **Endpoint Path:** `/api/ai/suggest-reply`
 
 -   **Request Body:**
 
-```json
-{
-  "job_title": "Need help with garden weeding",
-  "message_history": [
-    { "sender": "applicant", "content": "Hi, is this job still available?" }
-  ]
-}
-```
+    JSON
+
+    ```
+    {
+      "job_title": "Need help with garden weeding",
+      "message_history": [
+        { "sender": "applicant", "content": "Hi, is this job still available?" }
+      ]
+    }
+
+    ```
 
 -   **Success Response (200 OK):**
 
-```json
-{
-  "suggestions": [
-    "Yes, it is! Are you available this week?",
-    "Yes! Could you tell me about your experience?",
-    "It is. What is your availability like?"
-  ]
-}
-```
+    JSON
 
--   **Error Response(s):** 500 Internal Server Error if the AI service fails.
+    ```
+    {
+      "suggestions": [
+        "Yes, it is! Are you available this week?",
+        "Yes! Could you tell me about your experience?",
+        "It is. What is your availability like?"
+      ]
+    }
 
----
+    ```
 
+-   **Error Response(s):** `500 Internal Server Error`
