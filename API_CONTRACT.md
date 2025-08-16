@@ -26,7 +26,7 @@ Represents a user's public profile data stored in our database.
 
 Represents a job posting created by a user.
 
-```
+```json
 {
   "id": "uuid",
   "poster_id": "uuid", // Foreign key to users.id
@@ -43,7 +43,7 @@ Represents a job posting created by a user.
 
 Represents a user's application for a specific job.
 
-```
+```json
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -56,7 +56,7 @@ Represents a user's application for a specific job.
 
 Represents a single message within a job-specific chat.
 
-```
+```json
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -78,9 +78,9 @@ There are no custom /api/auth/signup or /api/auth/login endpoints.
 
 All protected API endpoints listed below require a JWT in the request header:
 
-```
+
 Authorization: Bearer <SUPABASE_JWT>
-```
+
 
 * * * * *
 
@@ -101,7 +101,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Success Response (200 OK):**
 
-```
+```json
 {
   "id": "a1b2c3d4-...",
   "full_name": "Ananya Sharma",
@@ -127,7 +127,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Request Body:**
 
-```
+```json
 {
   "full_name": "Ananya Sharma",
   "skills": ["Gardening", "Event Planning", "Tutoring"]
@@ -158,7 +158,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Success Response (200 OK):**
 
-```
+```json
 [
   {
     "id": "j1a2b3c4-...",
@@ -204,7 +204,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Request Body:**
 
-```
+```json
 {
   "title": "Math Tutor Needed",
   "description": "Looking for a tutor for grade 10 algebra.",
@@ -233,7 +233,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Request Body:**
 
-```
+```json
 {
   "title": "Urgent Math Tutor Needed",
   "description": "Updated description...",
@@ -307,7 +307,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Success Response (200 OK):**
 
-```
+```json
 [
     {
         "application_id": "app1-...",
@@ -340,7 +340,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Request Body:**
 
-```
+```json
 {
     "status": "accepted"
 }
@@ -348,7 +348,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Success Response (200 OK):**
 
-```
+```json
 {
     "message": "Application status updated successfully."
 }
@@ -394,7 +394,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Request Body:**
 
-```
+```json
 {
     "content": "Hi, I'm available to discuss this further tomorrow morning."
 }
@@ -424,7 +424,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Request Body:**
 
-```
+```json
 {
   "title": "Help moving boxes to a new apartment"
 }
@@ -432,7 +432,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Success Response (200 OK):**
 
-```
+```json
 {
   "description": "Seeking a reliable individual to assist with moving boxes...",
   "skills": ["Manual Labor", "Punctuality", "Physical Fitness"]
@@ -453,7 +453,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Request Body:**
 
-```
+```json
 {
   "job_title": "Need help with garden weeding",
   "message_history": [
@@ -464,7 +464,7 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Success Response (200 OK):**
 
-```
+```json
 {
   "suggestions": [
     "Yes, it is! Are you available this week?",
