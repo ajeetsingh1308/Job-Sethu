@@ -3,57 +3,37 @@ This document serves as the single source of truth for all API communication bet
 
 ---
 
-Table of Contents
-Data Models
+## Table of Contents
+# Data Models
+- User
+- Job
+- Application
+- Message
+- Authentication
+- API Endpoints
 
-User
-
-Job
-
-Application
-
-Message
-
-Authentication
-
-API Endpoints
-
-User & Profile Management
-
+# User & Profile Management
 1. Get Current User Profile
-
 2. Update Current User Profile
 
-Job Management
-
+# Job Management
 3. Get All Jobs
-
 4. Get Single Job Details
-
 5. Create a New Job
-
 6. Update a Job
-
 7. Delete a Job
 
-Job Applications
-
+# Job Applications
 8. Apply for a Job
-
 9. Get Applicants for a Job
-
 10. Update Application Status
 
-Chat & Messaging
-
+# Chat & Messaging
 11. Get Message History for a Job
-
 12. Send a Message
 
-AI Features (Gemini Integration)
-
+# AI Features (Gemini Integration)
 13. Suggest Job Details
-
 14. Suggest Chat Reply
 
 
