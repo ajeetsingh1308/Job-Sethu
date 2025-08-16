@@ -1,8 +1,4 @@
-Here's your text converted cleanly into a proper **API_CONTRACT.md** file in Markdown format:
-
-```
 # API Contract for Job Sethu
-
 This document serves as the single source of truth for all API communication between the Job Sethu frontend (React/React Native) and the backend (Supabase/Node.js Serverless Functions).
 
 ---
@@ -480,8 +476,6 @@ Authorization: Bearer <SUPABASE_JWT>
 
 -   **Error Response(s):** 500 Internal Server Error if the AI service fails.
 
-```
 ---
-
 Do you want me to also add a **table of contents at the top** so your teammates can quickly jump to each section in the `.md` file?
-```
+
