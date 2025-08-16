@@ -3,6 +3,61 @@ This document serves as the single source of truth for all API communication bet
 
 ---
 
+Table of Contents
+Data Models
+
+User
+
+Job
+
+Application
+
+Message
+
+Authentication
+
+API Endpoints
+
+User & Profile Management
+
+1. Get Current User Profile
+
+2. Update Current User Profile
+
+Job Management
+
+3. Get All Jobs
+
+4. Get Single Job Details
+
+5. Create a New Job
+
+6. Update a Job
+
+7. Delete a Job
+
+Job Applications
+
+8. Apply for a Job
+
+9. Get Applicants for a Job
+
+10. Update Application Status
+
+Chat & Messaging
+
+11. Get Message History for a Job
+
+12. Send a Message
+
+AI Features (Gemini Integration)
+
+13. Suggest Job Details
+
+14. Suggest Chat Reply
+
+
+
 ## Data Models
 
 These are the primary data structures that inform the API payloads.
@@ -477,5 +532,4 @@ Authorization: Bearer <SUPABASE_JWT>
 -   **Error Response(s):** 500 Internal Server Error if the AI service fails.
 
 ---
-Do you want me to also add a **table of contents at the top** so your teammates can quickly jump to each section in the `.md` file?
 
