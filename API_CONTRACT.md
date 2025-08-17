@@ -30,53 +30,53 @@ Table of Contents
 
 -   [Authentication]
 
--   [API Endpoints](https://www.google.com/search?q=%23api-endpoints)
+-   [API Endpoints]
 
-    -   [User & Profile Management](https://www.google.com/search?q=%23user--profile-management)
+    -   [User & Profile Management]
 
-        -   [1\. Get Current User Profile](https://www.google.com/search?q=%231-get-current-user-profile)
+        -   [1\. Get Current User Profile]
 
-        -   [2\. Update Current User Profile](https://www.google.com/search?q=%232-update-current-user-profile)
+        -   [2\. Update Current User Profile]
 
-    -   [Job Management](https://www.google.com/search?q=%23job-management)
+    -   [Job Management]
 
-        -   [3\. Get All Jobs](https://www.google.com/search?q=%233-get-all-jobs)
+        -   [3\. Get All Jobs]
 
-        -   [4\. Get Single Job Details](https://www.google.com/search?q=%234-get-single-job-details)
+        -   [4\. Get Single Job Details]
 
-        -   [5\. Create a New Job](https://www.google.com/search?q=%235-create-a-new-job)
+        -   [5\. Create a New Job]
 
-        -   [6\. Update a Job](https://www.google.com/search?q=%236-update-a-job)
+        -   [6\. Update a Job]
 
-        -   [7\. Delete a Job](https://www.google.com/search?q=%237-delete-a-job)
+        -   [7\. Delete a Job]
 
-    -   [Job Applications](https://www.google.com/search?q=%23job-applications)
+    -   [Job Applications]
 
-        -   [8\. Apply for a Job](https://www.google.com/search?q=%238-apply-for-a-job)
+        -   [8\. Apply for a Job]
 
-        -   [9\. Get Applicants for a Job](https://www.google.com/search?q=%239-get-applicants-for-a-job)
+        -   [9\. Get Applicants for a Job]
 
-        -   [10\. Update Application Status](https://www.google.com/search?q=%2310-update-application-status)
+        -   [10\. Update Application Status]
 
-    -   [Payment Integration](https://www.google.com/search?q=%23payment-integration-)
+    -   [Payment Integration]
 
-        -   [11\. Create Stripe Connect Account](https://www.google.com/search?q=%2311-create-stripe-connect-account)
+        -   [11\. Create Stripe Connect Account]
 
-        -   [12\. Create Payment Intent](https://www.google.com/search?q=%2312-create-payment-intent)
+        -   [12\. Create Payment Intent]
 
-        -   [13\. Confirm Job Completion & Release Funds](https://www.google.com/search?q=%2313-confirm-job-completion--release-funds)
+        -   [13\. Confirm Job Completion & Release Funds]
 
-    -   [Chat & Messaging](https://www.google.com/search?q=%23chat--messaging)
+    -   [Chat & Messaging]
 
-        -   [14\. Get Message History for a Job](https://www.google.com/search?q=%2314-get-message-history-for-a-job)
+        -   [14\. Get Message History for a Job]
 
-        -   [15\. Send a Message](https://www.google.com/search?q=%2315-send-a-message)
+        -   [15\. Send a Message]
 
-    -   [AI Features (Gemini Integration)](https://www.google.com/search?q=%23ai-features-gemini-integration)
+    -   [AI Features (Gemini Integration)]
 
-        -   [16\. Suggest Job Details](https://www.google.com/search?q=%2316-suggest-job-details)
+        -   [16\. Suggest Job Details]
 
-        -   [17\. Suggest Chat Reply](https://www.google.com/search?q=%2317-suggest-chat-reply)
+        -   [17\. Suggest Chat Reply]
 
 * * * * *
 
@@ -89,9 +89,7 @@ These are the primary data structures that inform the API payloads.
 
 Represents a user's public profile data.
 
-JSON
-
-```
+```JSON
 {
   "id": "uuid",
   "full_name": "string",
@@ -102,16 +100,13 @@ JSON
   "stripe_account_id": "string | null",
   "stripe_onboarding_complete": "boolean"
 }
-
 ```
 
 ### Job
 
 Represents a job posting created by a user.
 
-JSON
-
-```
+```JSON
 {
   "id": "uuid",
   "poster_id": "uuid",
@@ -123,32 +118,26 @@ JSON
   "image_url": "string | null",
   "status": "enum('open', 'in_progress', 'pending_completion', 'completed', 'canceled')"
 }
-
 ```
 
 ### Application
 
 Represents a user's application for a specific job.
 
-JSON
-
-```
+JSON```
 {
     "id": "uuid",
     "job_id": "uuid",
     "applicant_id": "uuid",
     "status": "enum('pending', 'accepted', 'rejected')"
 }
-
 ```
 
 ### Payment
 
 Tracks the status of a transaction for a job.
 
-JSON
-
-```
+JSON```
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -165,9 +154,8 @@ JSON
 
 Represents a single message within a job-specific chat.
 
-JSON
 
-```
+JSON```
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -176,7 +164,6 @@ JSON
     "content": "text",
     "created_at": "timestampz"
 }
-
 ```
 
 * * * * *
