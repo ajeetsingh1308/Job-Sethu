@@ -9,34 +9,28 @@ Job Sethu is a full-stack web application designed as a hyper-local marketplace 
 4) Shubham Galve - https://github.com/Shubhamgalave
 5) Vedanth Bandodkar - https://github.com/vedanthbandodkar
 
-## 💻 Tech Stack
+## ⚙️ Tech Stack
 
-The application is built using a **hybrid architecture** that balances rapid development with flexibility for custom features and AI integration.
+### 💻 Frontend
+- [React](https://react.dev/) -- Component-based UI
+- [JavaScript (ES6+)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) -- Core language
+- [Tailwind CSS](https://tailwindcss.com/) -- Utility-first styling
+- [Headless UI / Radix UI](https://headlessui.dev/) -- Accessible UI primitives
 
-### Frontend
-- **React (Web)**: Provides a fast, component-driven approach to building dynamic user interfaces.  
-- **React Native (Mobile App)**: Enables a native-like mobile experience with maximum code reuse from the web frontend.  
-- **TypeScript**: Strongly-typed language that reduces runtime errors, improves maintainability, and makes the codebase scalable.  
-- **Tailwind CSS**: Utility-first CSS framework for rapid styling, ensuring responsive and consistent UI across platforms.  
-- **Headless UI / Radix UI**: Unstyled, accessible components that give the team complete control over custom design while maintaining usability.
+### ⚙️ Backend
+- [Node.js](https://nodejs.org/) -- Runtime environment
+- [Express.js](https://expressjs.com/) -- REST API server
+- [Supabase](https://supabase.com/) -- PostgreSQL, Auth, and Storage
 
-### Backend & Database
-- **Supabase**: A modern backend-as-a-service that provides managed PostgreSQL, authentication, storage, real-time APIs, and more—removing boilerplate backend work.  
-  - **Database:** PostgreSQL with **PostGIS** extension for location-based queries, enabling hyper-local job discovery.  
-  - **Authentication:** Supabase Auth manages sign-up, login, and secure sessions out of the box.  
-  - **Realtime:** Enables live job feeds, chat updates, and notification features.  
-  - **Storage:** Secure file storage for user profile images and job-related uploads.  
-- **Node.js Serverless Functions**: Handles complex, custom business logic and external API integrations in an efficient, scalable manner.
+### 🤖 AI
+- [Google Genkit](https://ai.google.dev/genkit) -- AI pipelines & Gemini models
 
-### Artificial Intelligence
-- **Google Genkit with Gemini Models**: Powers the AI layer for natural language and image generation.  
-  - **Job Suggestions:** Auto-generate structured job descriptions from short titles.  
-  - **AI Reply Assistance:** Suggest context-aware, professional responses in chat.  
-  - **Job Image Creation:** Generate unique visuals for job postings, enhancing engagement.
+### 💳 Payments
+- [Razorpay](https://razorpay.com/) -- Payment gateway
+- [RazorpayX](https://razorpay.com/x/) -- Worker payouts (future-ready)
 
-### DevOps & Deployment
-- **Version Control:** Git + GitHub for collaboration and code management.  
-- **CI/CD Pipeline:** TBD (GitHub Actions / Vercel / Netlify / Docker could be considered).  
-- **Hosting & Deployment:** TBD, depending on cost, scalability, and team preference (e.g., Vercel for frontend, Supabase for backend, AWS/GCP for serverless functions).  
+### 🛠️ DevOps
+- [Vercel](https://vercel.com/) -- Frontend hosting
+- [Render](https://render.com/) / [Railway](https://railway.app/) -- Backend hosting
+- [Supabase Cloud](https://supabase.com/) -- Managed backend services
 
----
