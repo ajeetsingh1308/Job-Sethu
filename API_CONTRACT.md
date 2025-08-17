@@ -124,7 +124,7 @@ Represents a job posting created by a user.
 
 Represents a user's application for a specific job.
 
-JSON```
+```JSON
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -137,7 +137,7 @@ JSON```
 
 Tracks the status of a transaction for a job.
 
-JSON```
+```JSON
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -155,7 +155,7 @@ JSON```
 Represents a single message within a job-specific chat.
 
 
-JSON```
+```JSON
 {
     "id": "uuid",
     "job_id": "uuid",
@@ -192,9 +192,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "id": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
       "full_name": "Rohan Patel",
@@ -219,9 +217,7 @@ API Endpoints
 
 -   **Request Body:**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "full_name": "Rohan Patel",
       "skills": ["Event Support", "Driving", "Photography"]
@@ -231,9 +227,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "id": "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
       "full_name": "Rohan Patel",
@@ -262,9 +256,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     [
       {
         "id": "j1a2b3c4-...",
@@ -298,9 +290,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "id": "j1a2b3c4-...",
       "poster_id": "p1q2r3s4-...",
@@ -327,9 +317,8 @@ API Endpoints
 
 -   **Request Body:**
 
-    JSON
+    ```JSON
 
-    ```
     {
       "title": "Math Tutor Needed",
       "description": "Looking for a tutor for grade 10 algebra.",
@@ -342,9 +331,7 @@ API Endpoints
 
 -   **Success Response (201 Created):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "id": "m9n8b7v6-...",
       "poster_id": "a1b2c3d4-...",
@@ -371,9 +358,7 @@ API Endpoints
 
 -   **Request Body:**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "description": "Updated: Looking for a tutor for grade 10 algebra and geometry.",
       "amount": 600000
@@ -411,9 +396,7 @@ API Endpoints
 
 -   **Success Response (201 Created):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "id": "app1a2b3-...",
       "job_id": "j1a2b3c4-...",
@@ -435,9 +418,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     [
       {
         "application_id": "app1a2b3-...",
@@ -464,9 +445,7 @@ API Endpoints
 
 -   **Request Body:**
 
-    JSON
-
-    ```
+    ```JSON
     { "status": "accepted" }
 
     ```
@@ -489,9 +468,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "onboarding_url": "https://connect.stripe.com/express/..."
     }
@@ -510,9 +487,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "client_secret": "pi_..._secret_..."
     }
@@ -531,9 +506,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "message": "Completion confirmed. Funds are being released to the worker."
     }
@@ -556,9 +529,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     [
       {
         "id": "msg1-...",
@@ -592,18 +563,14 @@ API Endpoints
 
 -   **Request Body:**
 
-    JSON
-
-    ```
+    ```JSON
     { "content": "Yes, I have 2 years of landscaping experience." }
 
     ```
 
 -   **Success Response (201 Created):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "id": "msg3-...",
       "job_id": "j1a2b3c4-...",
@@ -631,18 +598,14 @@ API Endpoints
 
 -   **Request Body:**
 
-    JSON
-
-    ```
+    ```JSON
     { "title": "Help moving boxes to a new apartment" }
 
     ```
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "description": "Seeking a reliable individual to assist with moving boxes...",
       "skills": ["Manual Labor", "Punctuality", "Physical Fitness"]
@@ -662,9 +625,7 @@ API Endpoints
 
 -   **Request Body:**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "job_title": "Need help with garden weeding",
       "message_history": [
@@ -676,9 +637,7 @@ API Endpoints
 
 -   **Success Response (200 OK):**
 
-    JSON
-
-    ```
+    ```JSON
     {
       "suggestions": [
         "Yes, it is! Are you available this week?",
